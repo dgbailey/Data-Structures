@@ -10,10 +10,17 @@ class Queue:
     self.size = self.size + 1
   
   def dequeue(self):
-    popped_head = self.storage.get_head().get_value()
-    self.storage.set_head(self.storage.get_tail())
-    self.size = self.size -1
-    return popped_head
+    popped_head = self.storage.get_head()
+    if self.storage.get_head():
+      self.size = self.size -1
+      self.storage.set_head(self.storage.get_head().get_next())
+
+    else:
+      self.storage.set_head(self.storage.get_head())
+    
+    
+    
+    return popped_head if popped_head is None else popped_head.get_value()
 
   def len(self):
     return self.size
@@ -35,6 +42,7 @@ class LinkedList():
     else:
       if self.tail is None:
         self.tail = LinkNode(node_value)
+        self.head.set_next(self.tail)
       else:
         new_node = LinkNode(node_value)
         self.tail.set_next(new_node)
@@ -49,6 +57,9 @@ class LinkedList():
 
   def get_tail(self):
     return self.tail
+
+  def set_tail(self,new_tail):
+    self.tail = new_tail
   
 
 

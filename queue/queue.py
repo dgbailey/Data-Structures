@@ -7,12 +7,18 @@ class Queue:
 
   def enqueue(self, item):
     self.storage.add_item(item)
+    self.size = self.size + 1
   
   def dequeue(self):
-    pass
+    popped_head = self.storage.get_head().get_value()
+    self.storage.set_head(self.storage.get_tail())
+    self.size = self.size -1
+    return popped_head
 
   def len(self):
-    pass
+    return self.size
+    
+
 
 
 class LinkedList():
@@ -22,15 +28,24 @@ class LinkedList():
    self.tail = tail
    
 
-  def add_item(self, node):
+  def add_item(self, node_value):
     if self.head is None:
-      self.head = LinkNode()
+      self.head = LinkNode(node_value)
 
     else:
-      self.tail = node
+      if self.tail is None:
+        self.tail = LinkNode(node_value)
+      else:
+        new_node = LinkNode(node_value)
+        self.tail.set_next(new_node)
+        self.tail = new_node
+      
 
   def get_head(self):
     return self.head
+
+  def set_head(self, new_head):
+    self.head = new_head
 
   def get_tail(self):
     return self.tail
@@ -46,7 +61,13 @@ class LinkNode():
   def get_value(self):
     return self.value
 
+  def set_value(self,value):
+    self.value = value
+
   def get_next(self):
     return self.next
+
+  def set_next(self,next_value):
+    self.next = next_value
     #where do I get this next value
     #it needs to point to another node in the linked list

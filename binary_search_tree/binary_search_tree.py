@@ -48,7 +48,17 @@ class BinarySearchTree:
       raise Exception("Search Value Cannot be None")
 
   def get_max(self):
-    pass
+    if self.value:
+      if self.right:
+        if self.right.value > self.value:
+          return self.right.get_max()
+        else:
+          return self.value
+      else:
+        return self.value
+
+    else:
+      return False
 
   def for_each(self, cb):
     pass

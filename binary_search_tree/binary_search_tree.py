@@ -23,10 +23,29 @@ class BinarySearchTree:
 
      
 
-
-
   def contains(self, target):
-    pass
+    if target:
+      if self.value:
+        if self.value == target:
+          return True
+
+        elif self.value > target:
+          if self.left:
+            return self.left.contains(target)
+          else:
+            return False
+
+        elif self.value < target:
+          if self.right:
+            return self.right.contains(target)
+          else:
+            return False
+
+      else:
+        return False
+    
+    else:
+      raise Exception("Search Value Cannot be None")
 
   def get_max(self):
     pass

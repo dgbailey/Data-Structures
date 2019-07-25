@@ -60,6 +60,7 @@ class HeapTests(unittest.TestCase):
     self.heap.insert(5)
 
     descending_order = []
+    print("Storage",self.heap.storage)
 
     while self.heap.get_size() > 0:
       descending_order.append(self.heap.delete())

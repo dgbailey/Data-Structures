@@ -20,7 +20,7 @@ class ListNode:
   have a previous node it is point to."""
   def insert_before(self, value):
     current_prev = self.prev
-    self.prev = ListNode(value, current_prev, self)
+    self.prev = ListNode(value, current_prev, self)#insertnewhead
     if current_prev:
       current_prev.next = self.prev
 
@@ -31,6 +31,8 @@ class ListNode:
       self.prev.next = self.next
     if self.next:
       self.next.prev = self.prev
+    
+
 
 """Our doubly-linked list class. It holds references to
 the list's head and tail nodes."""
@@ -44,25 +46,151 @@ class DoublyLinkedList:
     return self.length
 
   def add_to_head(self, value):
-    pass
+
+    if self.length == 0:
+      self.tail = ListNode(value)
+      self.head = ListNode(value)
+      self.length +=1
+    
+    else:
+      current_head = self.head
+      #insert before current head
+      current_head.insert_before(value)
+      self.head = current_head.prev
+      self.length +=1
+
 
   def remove_from_head(self):
-    pass
+    #kind of like delete
+
+     if self.length == 0:
+      removed_head = self.tail
+      self.head = None
+      self.tail = None
+
+     elif self.length == 1:
+      removed_head = self.tail
+      self.head = None
+      self.tail = None
+      self.length -=1
+      return removed_head.value
+
+     else:
+      removed_head = self.head
+      self.head.delete()
+      self.head = removed_head.prev
+      self.length -=1
+      return removed_head
 
   def add_to_tail(self, value):
-    pass
+
+    if self.length == 0:
+      self.tail = ListNode(value)
+      self.head = ListNode(value)
+      self.length +=1
+
+    else:
+
+      current_tail = self.tail
+      self.tail.insert_after(value)
+      self.tail = current_tail.next
+      self.length +=1
+      
 
   def remove_from_tail(self):
-    pass
+    if self.length is 1:
+      removed_tail = self.tail
+      self.head = None
+      self.tail = None
+      self.length -=1
+      return removed_tail.value
+    else:
+      removed_tail = self.tail
+      self.tail.delete()
+      self.tail = removed_tail.prev
+      self.length -=1
+      return removed_tail.value
+    
 
   def move_to_front(self, node):
-    pass
+    
+    node.next = self.head
+    self.head = node
+    
 
   def move_to_end(self, node):
-    pass
+    curr_tail = self.tail
+    node.prev = curr_tail
+    self.tail = node
+    
 
   def delete(self, node):
-    pass
+   
+
+    if self.length == 1:
+        if self.head.value == node.value:
+          self.head = None
+          self.tail = None
+          self.length -=1
+
+    elif self.length == 2:
+      if self.head.value == node.value:
+
+          
+          self.head = self.tail
+          
+          self.length -= 1
+
+      elif self.tail.value == node.value:
+
+          self.tail = self.head
+          self.length -= 1
+
+      elif self.head.value == node.value and self.tail.value == node.value:
+          self.tail, self.head = None, None
+          self.length -= 1
+
+
+    else:
+
+      list_start = self.head
+
+      if self.head.value == node.value:
+
+          self.head = self.head.next
+
+      if self.tail.value == node.value:
+          self.tail = self.tail.prev
+
+      while list_start is not None:
+        comparison_node = list_start
+
+        if comparison_node.value == node.value:
+          comparison_node.delete()
+          self.length -=1
+        list_start = list_start.next
+
+
+    
     
   def get_max(self):
-    pass
+
+    if self.length == 0:
+      return 0
+
+    elif self.head:
+      curr_max = self.head.value
+      curr_node = self.head
+      while curr_node != None:
+
+        
+        comparision_value = curr_node.value
+
+        if comparision_value > curr_max:
+          curr_max = comparision_value
+
+        curr_node = curr_node.next
+
+
+      return curr_max
+
